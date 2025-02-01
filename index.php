@@ -35,8 +35,7 @@ include( 'inc/database.php' );
 			$posts = get_posts();
 			while ( $post = mysqli_fetch_assoc( $posts ) ) { ?>
 				<div class="bg-white shadow-lg rounded-lg overflow-hidden">
-					<img src="images/<?php echo $post['featured_image']; ?>" alt="Post Image"
-						class="w-full h-48 object-cover">
+					<img src="<?php echo $post['featured_image']; ?>" alt="Post Image" class="w-full h-48 object-cover">
 					<div class="p-4">
 						<h3 class="text-lg font-semibold mb-2"><?php echo $post['title']; ?></h3>
 						<p class="text-gray-600">
