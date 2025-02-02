@@ -1,3 +1,13 @@
+<?php
+include( 'inc/database.php' );
+// get id from url
+$current_id = $_GET['id'];
+
+$result = get_post_by_id( $current_id );
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,28 +33,31 @@
 	</header>
 
 	<!-- Page Container -->
-	<div class="max-w-[1140px] mx-auto p-6 min-h-screen">
-		<!-- Featured Image -->
-		<div class="mb-10 overflow-hidden rounded-lg shadow-lg">
-			<img src="https://picsum.photos/1140/500" alt="Featured Image"
-				class="w-full h-auto object-cover transition-transform duration-300 hover:scale-105" />
+	<?php
+	while ( $post = mysqli_fetch_assoc( $result ) ) {
+		?>
+		<div class="max-w-[800px] mx-auto p-6 min-h-screen">
+			<!-- Featured Image -->
+			<div class="mb-10 overflow-hidden rounded-lg shadow-lg">
+				<img src="<?php echo $post['featured_image']; ?>" alt="Featured Image"
+					class="w-full h-[350px] object-cover transition-transform duration-300 hover:scale-105" />
+			</div>
+
+			<!-- Title -->
+			<h1 class="text-5xl font-bold text-gray-900 mb-6">
+				<?php echo $post['title']; ?>
+			</h1>
+
+			<!-- Description -->
+			<div class="bg-white p-8 rounded-lg shadow-md">
+				<p class="text-lg text-gray-700 leading-relaxed">
+					<?php echo $post['content']; ?>
+				</p>
+			</div>
 		</div>
 
-		<!-- Title -->
-		<h1 class="text-5xl font-bold text-gray-900 mb-6">
-			This is the Post Title
-		</h1>
 
-		<!-- Description -->
-		<div class="bg-white p-8 rounded-lg shadow-md">
-			<p class="text-lg text-gray-700 leading-relaxed">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-				ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-				fugiat nulla pariatur.
-			</p>
-		</div>
-	</div>
+	<?php } ?>
 	<!-- Footer -->
 	<footer class="bg-white shadow-md mt-6 py-4 text-center">
 		<p>&copy; 2024 My Blog. All rights reserved.</p>
