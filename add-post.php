@@ -1,3 +1,21 @@
+<?php
+$request_method = $_SERVER['REQUEST_METHOD'];
+//check if the form is submitted with post request
+
+$submit_post = false;
+
+if ( $request_method == 'POST' ) {
+
+	include( 'inc/database.php' );
+
+	$submit_post = insert_post();
+
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +35,7 @@
 			</a>
 			<nav>
 				<a href="index.php" class="text-blue-600 px-3">Home</a>
-				<a href="add.php" class="text-blue-600 px-3">Add Post</a>
+				<a href="add-post.php" class="text-blue-600 px-3">Add Post</a>
 			</nav>
 		</div>
 	</header>
@@ -27,7 +45,7 @@
 		<h2 class="text-2xl font-semibold mb-6 text-center">Add New Post</h2>
 
 		<div class="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto">
-			<form action="" method="POST">
+			<form action="" method="POST" enctype="multipart/form-data">
 				<label class="block mb-2 font-medium">Title:</label>
 				<input type="text" name="title" class="w-full border border-gray-300 p-2 rounded mb-4" required>
 
@@ -36,9 +54,17 @@
 					required></textarea>
 
 				<label class="block mb-2 font-medium">Featured Image:</label>
-				<input type="file" class="w-full border border-gray-300 p-2 rounded mb-4">
+				<input type="file" name="featured_image" class="w-full border border-gray-300 p-2 rounded mb-4">
 
-				<button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Submit</button>
+				<button type="submit"
+					class="bg-blue-600 text-white px-4 py-2 rounded w-full">Submit</button><br /><br />
+				<?php
+
+				if ( $submit_post ) {
+					echo "Post inserted successfully!";
+				}
+
+				?>
 			</form>
 		</div>
 	</main>
