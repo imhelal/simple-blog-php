@@ -8,7 +8,6 @@ $db_name = "simple_blog";
 $conn = mysqli_connect( $host, $db_user, $db_password, $db_name );
 
 
-
 // Read All posts
 function get_posts() {
 	global $conn;
@@ -18,7 +17,6 @@ function get_posts() {
 
 	return $result;
 }
-
 
 // Insert data
 function insert_post() {
@@ -48,7 +46,7 @@ function insert_post() {
 function get_post_by_id( $post_id ) {
 	global $conn;
 
-	$query = "SELECT * FROM posts WHERE id=$post_id ";
+	$query = "SELECT * FROM posts WHERE id=$post_id";
 	$result = mysqli_query( $conn, $query );
 
 	return $result;
@@ -66,4 +64,19 @@ function delete_post( $post_id ) {
 	}
 
 	return false;
+}
+
+// Update post
+function update_post( $post_id, array $data ) {
+	global $conn;
+
+	$title = $data['title'];
+	$content = $data['content'];
+
+	$update_query = "UPDATE posts SET title='$title', content='$content' WHERE id=4";
+	$query_execution = mysqli_query( $conn, $update_query );
+
+	if ( ! $query_execution ) {
+		die( mysqli_error( $conn ) ); // Outputs the error if the query fails
+	}
 }

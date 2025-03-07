@@ -1,3 +1,24 @@
+<?php
+include( 'inc/database.php' );
+
+$requested_id = $_GET['id'];
+$get_post = get_post_by_id( $requested_id );
+$current_post = mysqli_fetch_assoc( $get_post );
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+	$data = array(
+		'title' => $_POST['title'],
+		'content' => $_POST['content'],
+	);
+	update_post( $requested_id, $data );
+
+	$current_post = mysqli_fetch_assoc( get_post_by_id( $requested_id ) );
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,18 +48,20 @@
 		<h2 class="text-2xl font-semibold mb-6 text-center">Edit Post</h2>
 
 		<div class="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto">
-			<form action="" method="POST">
+			<form action="" method="POST" enctype="multipart/form-data">
 				<label class="block mb-2 font-medium">Title:</label>
-				<input type="text" name="title" class="w-full border border-gray-300 p-2 rounded mb-4" required>
+				<input type="text" name="title" class="w-full border border-gray-300 p-2 rounded mb-4" required=""
+					value="<?php echo $current_post['title']; ?>">
 
 				<label class="block mb-2 font-medium">Content:</label>
 				<textarea name="content" class="w-full border border-gray-300 p-2 rounded mb-4" rows="5"
-					required></textarea>
+					required=""><?php echo $current_post['content']; ?></textarea>
 
 				<label class="block mb-2 font-medium">Featured Image:</label>
-				<input type="file" class="w-full border border-gray-300 p-2 rounded mb-4">
+				<input type="file" name="featured_image" class="w-full border border-gray-300 p-2 rounded mb-4">
 
-				<button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Submit</button>
+				<button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Update
+					Post</button><br><br>
 			</form>
 		</div>
 	</main>
